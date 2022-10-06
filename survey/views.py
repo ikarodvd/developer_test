@@ -1,8 +1,13 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from .models import Survey
+
 
 def index(request):
-    return HttpResponse("Hello, world, You're at the polls index")
+    survey_list = Survey.objects.order_by('-pub_date')
+    print(survey_list)
+    context = {'survey_list': survey_list}
+    return render(request, 'survey/index.html', context)
 
 def detail(request, question_id):
     return HttpResponse("You're looking at questions %s" % question_id)
